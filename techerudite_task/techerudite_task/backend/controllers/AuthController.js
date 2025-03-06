@@ -49,9 +49,9 @@ export const registerUser = async (req, res) => {
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Generate OTP for email verification
+   
     const otp = generateOTP();
-    const otpExpiresAt = new Date(Date.now() + 15 * 60 * 1000); // 15 minutes from now
+    const otpExpiresAt = new Date(Date.now() + 15 * 60 * 1000); 
 
     const newUser = await User.create({
       firstname,
@@ -192,15 +192,15 @@ export const resendVerificationOTP = async (req, res) => {
       return res.status(200).json({ message: "Email already verified" });
     }
 
-    // Generate new OTP
+  
     const otp = generateOTP();
-    const otpExpiresAt = new Date(Date.now() + 15 * 60 * 1000); // 15 minutes from now
+    const otpExpiresAt = new Date(Date.now() + 15 * 60 * 1000); 
 
     user.emailVerificationOTP = otp;
     user.otpExpiresAt = otpExpiresAt;
     await user.save();
 
-    // Send verification email
+   
     const emailSent = await sendVerificationEmail(email, otp);
 
     if (emailSent) {
